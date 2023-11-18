@@ -62,12 +62,10 @@ public class Voca extends BaseTime {
             return toStringDateTime(modifyName);
         }
 
-        public Response(Long id, String word, String mean, Long registerId, Long modifyId) {
+        public Response(Long id, String word, String mean) {
             this.id = id;
             this.word = word;
             this.mean = mean;
-            this.registerId = registerId;
-            this.modifyId = modifyId;
         }
     }
 }
