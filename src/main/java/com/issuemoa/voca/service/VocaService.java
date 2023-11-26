@@ -17,7 +17,7 @@ public class VocaService {
 
     QVoca voca = QVoca.voca;
 
-    public HashMap<String, Object> findAll(Voca.Request request, Integer page, Integer pageSize) {
+    public HashMap<String, Object> findAll(Voca.Request request, Integer offset, Integer limit) {
         HashMap<String, Object> resultMap = new HashMap<>();
 
         List<Voca.Response> list = jpaQueryFactory
@@ -27,20 +27,20 @@ public class VocaService {
                 voca.mean
             ))
             .from(voca)
-            .offset(page)
-            .limit(pageSize)
-            .orderBy(voca.id.desc())
+            .offset(offset)
+            .limit(limit)
+            .orderBy(voca.id.asc())
             .fetch();
 
         Long totalCnt = (long) jpaQueryFactory.select(voca.count()).from(voca).fetchOne();
 
-        int totalPage = (int) Math.ceil((float) totalCnt / pageSize);
+        int totalPage = (int) Math.ceil((float) totalCnt / limit);
         totalPage = totalPage == 0 ? 1 : totalPage;
 
         resultMap.put("list", list);
         resultMap.put("request", request);
-        resultMap.put("page", page);
-        resultMap.put("pageSize", pageSize);
+        resultMap.put("offset", offset);
+        resultMap.put("limit", limit);
         resultMap.put("totalCnt", totalCnt);
         resultMap.put("totalPage", totalPage);
 

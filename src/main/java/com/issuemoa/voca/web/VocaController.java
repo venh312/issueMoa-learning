@@ -19,11 +19,11 @@ public class VocaController {
     @GetMapping("/voca/list")
     public ResponseEntity<RestMessage> findAll(
         Voca.Request request,
-        @RequestParam(required = false, defaultValue = "0") Integer page,
-        @RequestParam(required = false, defaultValue = "24") Integer pageSize) {
+        @RequestParam(required = false, defaultValue = "0") Integer offset,
+        @RequestParam(required = false, defaultValue = "20") Integer limit) {
 
         return ResponseEntity.ok()
             .headers(new HttpHeaders())
-            .body(new RestMessage(HttpStatus.OK, vocaService.findAll(request, page, pageSize)));
+            .body(new RestMessage(HttpStatus.OK, vocaService.findAll(request, offset, limit)));
     }
 }
