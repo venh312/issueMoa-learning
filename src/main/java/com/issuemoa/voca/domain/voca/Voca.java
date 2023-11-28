@@ -1,5 +1,6 @@
-package com.issuemoa.voca.domain;
+package com.issuemoa.voca.domain.voca;
 
+import com.issuemoa.voca.domain.BaseTime;
 import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,13 +37,15 @@ public class Voca extends BaseTime {
         private String mean;
         private Long registerId;
         private Long modifyId;
+        private Long userId;
 
-        public Request(Long id, String word, String mean, Long registerId, Long modifyId) {
+        public Request(Long id, String word, String mean, Long registerId, Long modifyId, Long userId) {
             this.id = id;
             this.word = word;
             this.mean = mean;
             this.registerId = registerId;
             this.modifyId = modifyId;
+            this.userId = userId;
         }
     }
 
@@ -53,7 +56,6 @@ public class Voca extends BaseTime {
         private String mean;
         private Long registerId;
         private Long modifyId;
-
         public String getRegisterTime(LocalDateTime registerName) {
             return toStringDateTime(registerName);
         }

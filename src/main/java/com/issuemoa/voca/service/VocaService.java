@@ -1,9 +1,11 @@
 package com.issuemoa.voca.service;
 
-import com.issuemoa.voca.domain.QVoca;
-import com.issuemoa.voca.domain.Voca;
-import com.issuemoa.voca.domain.VocaRepository;
+import com.issuemoa.voca.domain.learn.QVocaLearn;
+import com.issuemoa.voca.domain.voca.QVoca;
+import com.issuemoa.voca.domain.voca.Voca;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,12 @@ public class VocaService {
     private final JPAQueryFactory jpaQueryFactory;
 
     QVoca voca = QVoca.voca;
+    QVocaLearn vocaLearn = QVocaLearn.vocaLearn;
+
+    public BooleanExpression eqId(Long id) {
+        if (id == null) return null;
+        return vocaLearn.userId.eq(id);
+    }
 
     public HashMap<String, Object> findAll(Voca.Request request, Integer offset, Integer limit) {
         HashMap<String, Object> resultMap = new HashMap<>();
@@ -27,12 +35,29 @@ public class VocaService {
                 voca.mean
             ))
             .from(voca)
+            .where(
+                JPAExpressions.selectFrom(vocaLearn)
+                    .where(vocaLearn.vocaId.eq(voca.id)
+                    .and(vocaLearn.learnYn.eq("Y")
+                    .and(eqId(request.getUserId()))))
+                    .notExists()
+            )
             .offset(offset)
             .limit(limit)
             .orderBy(voca.id.asc())
             .fetch();
 
-        Long totalCnt = (long) jpaQueryFactory.select(voca.count()).from(voca).fetchOne();
+        long totalCnt = (long) jpaQueryFactory
+            .select(voca.count())
+            .from(voca)
+            .where(
+                JPAExpressions.selectFrom(vocaLearn)
+                    .where(vocaLearn.vocaId.eq(voca.id)
+                    .and(vocaLearn.learnYn.eq("Y")
+                    .and(eqId(request.getUserId()))))
+                    .notExists()
+            )
+            .fetchOne();
 
         int totalPage = (int) Math.ceil((float) totalCnt / limit);
         totalPage = totalPage == 0 ? 1 : totalPage;

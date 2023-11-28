@@ -1,4 +1,4 @@
-package com.issuemoa.voca.domain;
+package com.issuemoa.voca.domain.voca;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

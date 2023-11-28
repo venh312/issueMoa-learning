@@ -6,7 +6,7 @@ spring:
   profiles:
     active: dev
   config:
-    import: optional:configserver:http://issuemoa-config:8888
+    import: optional:configserver:host.docker.internal:8888
 management: # Actuator config
   endpoints:
     web:
@@ -19,4 +19,4 @@ eureka:
     registerWithEureka: true # 유레카 서비스 등록 여부 (default: true)
     fetchRegistry: true # 레지스트리 사본을 로컬에 내려받기 (default: true)
     serviceUrl:
-      defaultZone: http://issuemoa-eureka:8761/eureka # 유레카 서비스의 위치 설정
+      defaultZone: host.docker.internal:8761/eureka # 유레카 서비스의 위치 설정
