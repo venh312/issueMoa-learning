@@ -3,11 +3,9 @@ server:
 spring:
   application:
     name: issueMoaVoca
-  profiles:
-    active: dev
   config:
     import: optional:configserver:host.docker.internal:8888
-management: # Actuator config
+management:
   endpoints:
     web:
       exposure:

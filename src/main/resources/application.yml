@@ -4,10 +4,10 @@ spring:
   application:
     name: issueMoaVoca
   profiles:
-    active: dev
+    active: local
   config:
     import: optional:configserver:http://localhost:8888
-management: # Actuator config
+management:
   endpoints:
     web:
       exposure:
