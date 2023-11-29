@@ -29,9 +29,9 @@ public class VocaLearnService {
         request.setUserId((Long) userMap.get("id"));
 
         long result = jpaQueryFactory.select(vocaLearn.count())
-                .from(vocaLearn)
-                .where(vocaLearn.vocaId.eq(request.getVocaId()))
-                .fetchOne();
+                            .from(vocaLearn)
+                            .where(vocaLearn.vocaId.eq(request.getVocaId()))
+                            .fetchOne();
 
         if (result > 0) {
             return jpaQueryFactory.update(vocaLearn)
@@ -41,5 +41,17 @@ public class VocaLearnService {
         }
 
         return vocaLearnRepository.save(request.toEntity()).getId();
+    }
+
+    public Long countByLearn(HttpServletRequest httpServletRequest) throws JsonProcessingException {
+        HashMap<String, Object> userMap = usersRestApi.getUserInfo(httpServletRequest);
+        if (userMap == null) return 0L;
+
+        return jpaQueryFactory
+            .select(vocaLearn.count())
+            .from(vocaLearn)
+            .where(vocaLearn.userId.eq((Long) userMap.get("id"))
+            .and(vocaLearn.learnYn.eq("Y")))
+            .fetchOne();
     }
 }

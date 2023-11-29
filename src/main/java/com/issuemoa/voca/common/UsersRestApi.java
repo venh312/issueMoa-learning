@@ -23,14 +23,12 @@ public class UsersRestApi {
 
         if (bearerToken.isEmpty() || bearerToken.contains("undefined")) return null;
 
-        RestTemplate restTemplate = new RestTemplate();
-
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", bearerToken);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
 
-        return ConvertUtil.toUserInfoMap(restTemplate.exchange(endpointUserInfo, HttpMethod.GET, entity, String.class).getBody());
+        return ConvertUtil.toUserInfoMap(new RestTemplate().exchange(endpointUserInfo, HttpMethod.GET, entity, String.class).getBody());
     }
 
 }

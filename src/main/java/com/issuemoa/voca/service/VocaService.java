@@ -21,7 +21,7 @@ public class VocaService {
     QVocaLearn vocaLearn = QVocaLearn.vocaLearn;
 
     public BooleanExpression eqId(Long id) {
-        if (id == null) return null;
+        if (id == null) id = 0L;
         return vocaLearn.userId.eq(id);
     }
 
