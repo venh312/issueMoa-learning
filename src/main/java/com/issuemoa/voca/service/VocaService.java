@@ -1,5 +1,7 @@
 package com.issuemoa.voca.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.issuemoa.voca.common.UsersRestApi;
 import com.issuemoa.voca.domain.learn.QVocaLearn;
 import com.issuemoa.voca.domain.voca.QVoca;
 import com.issuemoa.voca.domain.voca.Voca;
@@ -9,6 +11,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,14 +22,20 @@ public class VocaService {
 
     QVoca voca = QVoca.voca;
     QVocaLearn vocaLearn = QVocaLearn.vocaLearn;
+    private final UsersRestApi usersRestApi;
 
     public BooleanExpression eqId(Long id) {
         if (id == null) id = 0L;
         return vocaLearn.userId.eq(id);
     }
 
-    public HashMap<String, Object> findAll(Voca.Request request, Integer offset, Integer limit) {
+    public HashMap<String, Object> findAll(Voca.Request request, HttpServletRequest httpServletRequest, Integer offset, Integer limit) throws JsonProcessingException {
         HashMap<String, Object> resultMap = new HashMap<>();
+
+        // 로그인 한 사용자면 id를 가져온다.
+        HashMap<String, Object> userInfo = usersRestApi.getUserInfo(httpServletRequest);
+        if (userInfo != null)
+            request.setUserId((Long) userInfo.get("id"));
 
         List<Voca.Response> list = jpaQueryFactory
             .select(Projections.constructor(Voca.Response.class,

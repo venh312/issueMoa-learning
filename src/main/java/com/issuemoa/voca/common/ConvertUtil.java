@@ -9,30 +9,34 @@ import java.util.HashMap;
 @Slf4j
 public class ConvertUtil {
     public static HashMap<String, Object> toUserInfoMap(String strData) throws JsonProcessingException {
-        HashMap<String, Object> result = new HashMap<>();
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonNode = objectMapper.readTree(strData);
+        HashMap<String, Object> result = null;
 
-        // "data" 객체에서 "id" 필드 추출
-        JsonNode dataNode = jsonNode.get("data");
-        if (dataNode != null) {
-            JsonNode idNode = dataNode.get("id");
-            if (idNode != null) {
-                long idValue = idNode.asLong();
-                result.put("id", idValue);
-                log.info("ID: {}", idValue);
-            } else {
-                log.info("ID not found in data.");
-            }
+        if (strData != null && !strData.isEmpty()) {
+            result = new HashMap<>();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(strData);
 
-            JsonNode emailNode = dataNode.get("email");
-            if (emailNode != null) {
-                result.put("email", emailNode.toString());
+            // "data" 객체에서 "id" 필드 추출
+            JsonNode dataNode = jsonNode.get("data");
+            if (dataNode != null) {
+                JsonNode idNode = dataNode.get("id");
+                if (idNode != null) {
+                    long idValue = idNode.asLong();
+                    result.put("id", idValue);
+                    log.info("ID: {}", idValue);
+                } else {
+                    log.info("ID not found in data.");
+                }
+
+                JsonNode emailNode = dataNode.get("email");
+                if (emailNode != null) {
+                    result.put("email", emailNode.toString());
+                } else {
+                    log.info("EMAIL not found in data.");
+                }
             } else {
                 log.info("EMAIL not found in data.");
             }
-        } else {
-            log.info("EMAIL not found in data.");
         }
 
         return result;
