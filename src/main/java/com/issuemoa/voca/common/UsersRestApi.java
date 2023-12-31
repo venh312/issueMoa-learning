@@ -21,7 +21,7 @@ public class UsersRestApi {
         String bearerToken = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
         log.info("==> [getUserInfo] bearerToken: {}", bearerToken);
 
-        if (bearerToken.isEmpty() || bearerToken.contains("undefined")) return null;
+        if (bearerToken == null || bearerToken.isEmpty() || bearerToken.contains("undefined")) return null;
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", bearerToken);
