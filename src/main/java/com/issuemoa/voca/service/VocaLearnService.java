@@ -30,13 +30,17 @@ public class VocaLearnService {
 
         long result = jpaQueryFactory.select(vocaLearn.count())
                             .from(vocaLearn)
-                            .where(vocaLearn.vocaId.eq(request.getVocaId()))
+                            .where(vocaLearn.vocaId.eq(request.getVocaId())
+                                .and(vocaLearn.userId.eq(request.getUserId()))
+                            )
                             .fetchOne();
 
         if (result > 0) {
             return jpaQueryFactory.update(vocaLearn)
                 .set(vocaLearn.learnYn, request.getLearnYn())
-                .where(vocaLearn.vocaId.eq(request.getVocaId()))
+                .where(vocaLearn.vocaId.eq(request.getVocaId())
+                    .and(vocaLearn.userId.eq(request.getUserId()))
+                )
                 .execute();
         }
 
