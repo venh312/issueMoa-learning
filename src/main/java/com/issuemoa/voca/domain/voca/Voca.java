@@ -1,6 +1,7 @@
 package com.issuemoa.voca.domain.voca;
 
 import com.issuemoa.voca.domain.BaseTime;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,20 +50,23 @@ public class Voca extends BaseTime {
         }
     }
 
+    @Schema(description = "Voca 응답")
     @Getter
     public static class Response {
+        @Schema(description = "IDX")
         private Long id;
-        private String word;
-        private String mean;
-        private Long registerId;
-        private Long modifyId;
-        public String getRegisterTime(LocalDateTime registerName) {
-            return toStringDateTime(registerName);
-        }
 
-        public String getModifyName(LocalDateTime modifyName) {
-            return toStringDateTime(modifyName);
-        }
+        @Schema(description = "단어")
+        private String word;
+
+        @Schema(description = "의미")
+        private String mean;
+
+        @Schema(description = "등록자 ID")
+        private Long registerId;
+
+        @Schema(description = "변경자 ID")
+        private Long modifyId;
 
         public Response(Long id, String word, String mean) {
             this.id = id;
