@@ -23,7 +23,7 @@ public class GradeExp extends BaseTime {
     private Long registerId;
     private Long modifyId;
 
-    @Schema(description = "등급 경험치 응답")
+    @Schema(name = "Grade Exp Response")
     @Getter
     public static class Response {
         @Schema(description = "IDX")

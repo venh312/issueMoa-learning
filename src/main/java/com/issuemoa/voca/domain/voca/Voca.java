@@ -50,7 +50,7 @@ public class Voca extends BaseTime {
         }
     }
 
-    @Schema(description = "Voca 응답")
+    @Schema(name="Voca Response")
     @Getter
     public static class Response {
         @Schema(description = "IDX")

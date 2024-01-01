@@ -1,6 +1,7 @@
 package com.issuemoa.voca.domain.learn;
 
 import com.issuemoa.voca.domain.BaseTime;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -51,11 +52,19 @@ public class VocaLearn extends BaseTime {
         }
     }
 
+    @Schema(name="Voca Learn Response")
     @Getter
     public static class Response {
+        @Schema(description = "IDX")
         private Long id;
+
+        @Schema(description = "사용자 ID")
         private Long userId;
+
+        @Schema(description = "Voca ID")
         private Long vocaId;
+
+        @Schema(description = "학습 여부 (Y/N)")
         private String learnYn;
 
         public Response(Long id, Long userId, Long vocaId, String learnYn) {
