@@ -23,3 +23,9 @@ eureka:
 endpoint:
   users:
     info: http://localhost:17070/users/info
+
+springdoc:
+  api-docs:
+    path: /voca/v3/api-docs
+  swagger-ui:
+    path: /voca/swagger-ui.html
