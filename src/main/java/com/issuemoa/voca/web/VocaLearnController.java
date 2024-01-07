@@ -30,7 +30,7 @@ public class VocaLearnController {
             @ApiResponse(responseCode = "200", description = "등록 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근")})
     @Operation(summary = "Voca 알고있어요", description = "학습한 단어를 등록한다.")
-    @PostMapping("/learn")
+    @PostMapping("/voca-learn")
     public ResponseEntity<RestMessage> save(
             @RequestBody VocaLearn.Request request,
             HttpServletRequest httpServletRequest) {
@@ -48,7 +48,7 @@ public class VocaLearnController {
             @ApiResponse(responseCode = "200", description = "조회 성공"),
             @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근")})
     @Operation(summary = "Voca 학습한 단어 개수", description = "학습한 단어 개수를 가져온다.")
-    @GetMapping("/countLearn")
+    @GetMapping("/voca-learn/countLearn")
     public ResponseEntity<RestMessage> countByLearn(HttpServletRequest httpServletRequest) {
         try {
             return ResponseEntity.ok()
