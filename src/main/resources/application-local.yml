@@ -1,6 +1,6 @@
 # -Dspring.profiles.active=local
 server:
-  port: 17080
+  port: 37080
 spring:
   application:
     name: issueMoaVoca
@@ -18,11 +18,11 @@ eureka:
     registerWithEureka: true # 유레카 서비스 등록 여부 (default: true)
     fetchRegistry: true # 레지스트리 사본을 로컬에 내려받기 (default: true)
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka # 유레카 서비스의 위치 설정
+      defaultZone: http://localhost:38761/eureka # 유레카 서비스의 위치 설정
 
 endpoint:
   users:
-    info: http://localhost:17070/users/info
+    info: http://localhost:37070/users/info
 
 springdoc:
   api-docs:
