@@ -1,10 +1,9 @@
-package com.issuemoa.voca.service;
+package com.issuemoa.voca.service.voca;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.issuemoa.voca.common.UsersRestApi;
 import com.issuemoa.voca.domain.learn.QVocaLearn;
 import com.issuemoa.voca.domain.voca.QVoca;
-import com.issuemoa.voca.domain.voca.Voca;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -29,16 +28,17 @@ public class VocaService {
         return vocaLearn.userId.eq(id);
     }
 
-    public HashMap<String, Object> findAll(Voca.Request request, HttpServletRequest httpServletRequest, Integer offset, Integer limit) throws JsonProcessingException {
+    public HashMap<String, Object> findAll(HttpServletRequest httpServletRequest, Integer offset, Integer limit) throws JsonProcessingException {
         HashMap<String, Object> resultMap = new HashMap<>();
 
-        // 로그인 한 사용자면 id를 가져온다.
-        HashMap<String, Object> userInfo = usersRestApi.getUserInfo(httpServletRequest);
-        if (userInfo != null)
-            request.setUserId((Long) userInfo.get("id"));
+        Long userId = null;
 
-        List<Voca.Response> list = jpaQueryFactory
-            .select(Projections.constructor(Voca.Response.class,
+        // 로그인 상태 라면 본인의 학습 진도를 위해 설정
+        HashMap<String, Object> userInfo = usersRestApi.getUserInfo(httpServletRequest);
+        if (userInfo != null) userId = ((Long) userInfo.get("id"));
+
+        List<VocaResponse> list = jpaQueryFactory
+            .select(Projections.constructor(VocaResponse.class,
                 voca.id,
                 voca.word,
                 voca.mean
@@ -48,7 +48,7 @@ public class VocaService {
                 JPAExpressions.selectFrom(vocaLearn)
                     .where(vocaLearn.vocaId.eq(voca.id)
                     .and(vocaLearn.learnYn.eq("Y")
-                    .and(eqId(request.getUserId()))))
+                    .and(eqId(userId))))
                     .notExists()
             )
             .offset(offset)
@@ -63,7 +63,7 @@ public class VocaService {
                 JPAExpressions.selectFrom(vocaLearn)
                     .where(vocaLearn.vocaId.eq(voca.id)
                     .and(vocaLearn.learnYn.eq("Y")
-                    .and(eqId(request.getUserId()))))
+                    .and(eqId(userId))))
                     .notExists()
             )
             .fetchOne();
@@ -72,7 +72,6 @@ public class VocaService {
         totalPage = totalPage == 0 ? 1 : totalPage;
 
         resultMap.put("list", list);
-        resultMap.put("request", request);
         resultMap.put("offset", offset);
         resultMap.put("limit", limit);
         resultMap.put("totalCnt", totalCnt);
