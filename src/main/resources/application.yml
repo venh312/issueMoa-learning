@@ -2,7 +2,7 @@ server:
   port: 17080
 spring:
   application:
-    name: issueMoaVoca
+    name: issueMoaLearning
   profiles:
     active: docker
   config:
@@ -26,6 +26,6 @@ endpoint:
 
 springdoc:
   api-docs:
-    path: /voca/v3/api-docs
+    path: /learning/v3/api-docs
   swagger-ui:
-    path: /voca/swagger-ui.html
+    path: /learning/swagger-ui.html

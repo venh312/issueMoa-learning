@@ -17,7 +17,7 @@ issuemoa/voca 954d2adb5a88    1 hours ago    510MB    latest
 ```
 
 ### 3. 도커 컨테이너 실행
-```$ docker run -d --name=issuemoa-voca -p17080:17080 issuemoa/voca```
+```$ docker run -d --name=issuemoa-learning -p17080:17080 issuemoa/voca```
 - -d 백그라운드로 실행
 - --name 컨테이너명 설정
 - -p 포트 설정
