@@ -1,16 +1,11 @@
 package com.issuemoa.learning.service.interview;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.issuemoa.learning.common.UsersRestApi;
-import com.issuemoa.learning.domain.interview.InterviewRepository;
 import com.issuemoa.learning.domain.interview.QInterview;
-import com.issuemoa.learning.service.interview.interviewResponse;
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,7 +16,7 @@ public class InterviewService {
     private final JPAQueryFactory jpaQueryFactory;
     private final QInterview interview = QInterview.interview;
 
-    public HashMap<String, Object> findAll(String category) throws JsonProcessingException {
+    public HashMap<String, Object> findAll(String category) {
         HashMap<String, Object> resultMap = new HashMap<>();
 
         List<interviewResponse> list = jpaQueryFactory

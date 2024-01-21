@@ -1,6 +1,5 @@
 package com.issuemoa.learning.web;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.issuemoa.learning.message.RestMessage;
 import com.issuemoa.learning.service.interview.InterviewService;
 import com.issuemoa.learning.service.interview.interviewResponse;
@@ -33,9 +32,9 @@ public class InterviewController {
     @GetMapping("/interview")
     public ResponseEntity<RestMessage> findAll(
             @Schema(description = "NETWORK/DATABASE/BACKEND/SECURITY/AGDS/CRYPTO/OS")
-            @RequestParam(value = "category", defaultValue = "BACKEND") String category) throws JsonProcessingException {
+            @RequestParam(value = "category", defaultValue = "BACKEND") String category) {
         return ResponseEntity.ok()
-                .headers(new HttpHeaders())
-                .body(new RestMessage(HttpStatus.OK, interviewService.findAll(category)));
+                    .headers(new HttpHeaders())
+                    .body(new RestMessage(HttpStatus.OK, interviewService.findAll(category)));
     }
 }
