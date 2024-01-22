@@ -36,7 +36,7 @@ public class VocaController {
         @RequestParam(required = false, defaultValue = "20") Integer limit) throws JsonProcessingException {
 
         return ResponseEntity.ok()
-            .headers(new HttpHeaders())
-            .body(new RestMessage(HttpStatus.OK, vocaService.findAll(httpServletRequest, offset, limit)));
+                    .headers(new HttpHeaders())
+                    .body(new RestMessage(HttpStatus.OK, vocaService.findAll(httpServletRequest, offset, limit)));
     }
 }

@@ -1,8 +1,8 @@
 package com.issuemoa.learning.web;
 
-import com.issuemoa.learning.domain.grade.GradeExp;
 import com.issuemoa.learning.message.RestMessage;
-import com.issuemoa.learning.service.GradeExpService;
+import com.issuemoa.learning.service.grade.GradeExpService;
+import com.issuemoa.learning.service.grade.GradeExpResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -25,7 +25,7 @@ public class GradeExpController {
     private final GradeExpService gradeExpService;
 
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = GradeExp.Response.class))),
+        @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = GradeExpResponse.class))),
         @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근")})
     @Operation(summary = "Grade Exp 목록", description = "등급 달성 목록을 불러온다.")
     @GetMapping("/grade-exp")

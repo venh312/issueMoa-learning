@@ -1,6 +1,5 @@
-package com.issuemoa.learning.service;
+package com.issuemoa.learning.service.grade;
 
-import com.issuemoa.learning.domain.grade.GradeExp;
 import com.issuemoa.learning.domain.grade.GradeExpRepository;
 import com.issuemoa.learning.domain.grade.QGradeExp;
 import com.querydsl.core.types.Projections;
@@ -14,19 +13,19 @@ import java.util.List;
 public class GradeExpService {
     private final GradeExpRepository gradeExpRepository;
     private final JPAQueryFactory jpaQueryFactory;
-    private QGradeExp gradeExp = QGradeExp.gradeExp;
+    private final QGradeExp gradeExp = QGradeExp.gradeExp;
 
-    public List<GradeExp.Response> findAll() {
+    public List<GradeExpResponse> findAll() {
         return jpaQueryFactory.select(
-            Projections.constructor(GradeExp.Response.class,
+            Projections.constructor(GradeExpResponse.class,
                 gradeExp.id,
                 gradeExp.gradeCode,
-                gradeExp.standard
+                gradeExp.standard,
+                gradeExp.registerTime,
+                gradeExp.modifyTime
             ))
             .from(gradeExp)
             .orderBy(gradeExp.standard.desc())
             .fetch();
     }
-
-
 }

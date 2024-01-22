@@ -1,9 +1,9 @@
 package com.issuemoa.learning.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.issuemoa.learning.domain.vocalearn.VocaLearn;
 import com.issuemoa.learning.message.RestMessage;
-import com.issuemoa.learning.service.VocaLearnService;
+import com.issuemoa.learning.service.vocalearn.VocaLearnRequest;
+import com.issuemoa.learning.service.vocalearn.VocaLearnService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -31,13 +31,11 @@ public class VocaLearnController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근")})
     @Operation(summary = "Voca 알고있어요", description = "학습한 단어를 등록한다.")
     @PostMapping("/voca-learn")
-    public ResponseEntity<RestMessage> save(
-            @RequestBody VocaLearn.Request request,
-            HttpServletRequest httpServletRequest) {
+    public ResponseEntity<RestMessage> save(@RequestBody VocaLearnRequest request, HttpServletRequest httpServletRequest) {
         try {
             return ResponseEntity.ok()
-                .headers(new HttpHeaders())
-                .body(new RestMessage(HttpStatus.OK, vocaLearnService.save(request, httpServletRequest)));
+                        .headers(new HttpHeaders())
+                        .body(new RestMessage(HttpStatus.OK, vocaLearnService.save(request, httpServletRequest)));
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }
@@ -52,8 +50,8 @@ public class VocaLearnController {
     public ResponseEntity<RestMessage> countByLearn(HttpServletRequest httpServletRequest) {
         try {
             return ResponseEntity.ok()
-                .headers(new HttpHeaders())
-                .body(new RestMessage(HttpStatus.OK, vocaLearnService.countByLearn(httpServletRequest)));
+                        .headers(new HttpHeaders())
+                        .body(new RestMessage(HttpStatus.OK, vocaLearnService.countByLearn(httpServletRequest)));
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
         }

@@ -1,9 +1,8 @@
-package com.issuemoa.learning.service;
+package com.issuemoa.learning.service.vocalearn;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.issuemoa.learning.common.UsersRestApi;
 import com.issuemoa.learning.domain.vocalearn.QVocaLearn;
-import com.issuemoa.learning.domain.vocalearn.VocaLearn;
 import com.issuemoa.learning.domain.vocalearn.VocaLearnRepository;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -20,28 +19,28 @@ public class VocaLearnService {
     private final VocaLearnRepository vocaLearnRepository;
     private final JPAQueryFactory jpaQueryFactory;
     private final UsersRestApi usersRestApi;
-    private QVocaLearn vocaLearn = QVocaLearn.vocaLearn;
+    private final QVocaLearn vocaLearn = QVocaLearn.vocaLearn;
 
     @Transactional
-    public Long save(VocaLearn.Request request, HttpServletRequest httpServletRequest) throws JsonProcessingException {
+    public Long save(VocaLearnRequest request, HttpServletRequest httpServletRequest) throws JsonProcessingException {
         HashMap<String, Object> userMap = usersRestApi.getUserInfo(httpServletRequest);
-        if (userMap == null) return null;
-        request.setUserId((Long) userMap.get("id"));
+
+        Long userId = 0L;
+        if (userMap == null) return 0L;
+
+        userId = (Long) userMap.get("id");
 
         long result = jpaQueryFactory.select(vocaLearn.count())
                             .from(vocaLearn)
-                            .where(vocaLearn.vocaId.eq(request.getVocaId())
-                                .and(vocaLearn.userId.eq(request.getUserId()))
-                            )
+                            .where(vocaLearn.vocaId.eq(request.vocaId())
+                            .and(vocaLearn.userId.eq(userId)))
                             .fetchOne();
 
         if (result > 0) {
             return jpaQueryFactory.update(vocaLearn)
-                .set(vocaLearn.learnYn, request.getLearnYn())
-                .where(vocaLearn.vocaId.eq(request.getVocaId())
-                    .and(vocaLearn.userId.eq(request.getUserId()))
-                )
-                .execute();
+                        .set(vocaLearn.learnYn, request.learnYn())
+                        .where(vocaLearn.vocaId.eq(request.vocaId()).and(vocaLearn.userId.eq(userId)))
+                        .execute();
         }
 
         return vocaLearnRepository.save(request.toEntity()).getId();
@@ -49,13 +48,14 @@ public class VocaLearnService {
 
     public Long countByLearn(HttpServletRequest httpServletRequest) throws JsonProcessingException {
         HashMap<String, Object> userMap = usersRestApi.getUserInfo(httpServletRequest);
+
         if (userMap == null) return 0L;
 
         return jpaQueryFactory
-            .select(vocaLearn.count())
-            .from(vocaLearn)
-            .where(vocaLearn.userId.eq((Long) userMap.get("id"))
-            .and(vocaLearn.learnYn.eq("Y")))
-            .fetchOne();
+                    .select(vocaLearn.count())
+                    .from(vocaLearn)
+                    .where(vocaLearn.userId.eq((Long) userMap.get("id"))
+                    .and(vocaLearn.learnYn.eq("Y")))
+                    .fetchOne();
     }
 }

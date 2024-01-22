@@ -12,8 +12,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class InterviewService {
-    private final UsersRestApi usersRestApi;
     private final JPAQueryFactory jpaQueryFactory;
+    private final UsersRestApi usersRestApi;
     private final QInterview interview = QInterview.interview;
 
     public HashMap<String, Object> findAll(String category) {

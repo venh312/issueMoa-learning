@@ -18,10 +18,9 @@ import java.util.List;
 @Service
 public class VocaService {
     private final JPAQueryFactory jpaQueryFactory;
-
-    QVoca voca = QVoca.voca;
-    QVocaLearn vocaLearn = QVocaLearn.vocaLearn;
     private final UsersRestApi usersRestApi;
+    private final QVoca voca = QVoca.voca;
+    private final QVocaLearn vocaLearn = QVocaLearn.vocaLearn;
 
     public BooleanExpression eqId(Long id) {
         if (id == null) id = 0L;
