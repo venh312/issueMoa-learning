@@ -39,4 +39,19 @@ public class VocaController {
                     .headers(new HttpHeaders())
                     .body(new RestMessage(HttpStatus.OK, vocaService.findAll(httpServletRequest, offset, limit)));
     }
+
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = VocaResponse.class))),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근")})
+    @Operation(summary = "단어 다시보기 목록", description = "단어 다시보기 목록을 불러온다.")
+    @GetMapping("/voca/retry")
+    public ResponseEntity<RestMessage> findByVocaRetry(
+            HttpServletRequest httpServletRequest,
+            @RequestParam(required = false, defaultValue = "0") Integer offset,
+            @RequestParam(required = false, defaultValue = "20") Integer limit) throws JsonProcessingException {
+
+        return ResponseEntity.ok()
+                    .headers(new HttpHeaders())
+                    .body(new RestMessage(HttpStatus.OK, vocaService.findByVocaRetry(httpServletRequest, offset, limit)));
+    }
 }

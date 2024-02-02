@@ -78,4 +78,38 @@ public class VocaService {
 
         return resultMap;
     }
+
+    public HashMap<String, Object> findByVocaRetry(HttpServletRequest httpServletRequest, Integer offset, Integer limit) throws JsonProcessingException {
+        HashMap<String, Object> resultMap = new HashMap<>();
+
+        HashMap<String, Object> userInfo = usersRestApi.getUserInfo(httpServletRequest);
+        if (userInfo == null) return null;
+
+        Long userId = ((Long) userInfo.get("id"));
+
+        List<VocaRetryResponse> list = jpaQueryFactory
+                .select(Projections.constructor(VocaRetryResponse.class,
+                        voca.id,
+                        voca.word,
+                        voca.mean,
+                        vocaLearn.userId,
+                        vocaLearn.learnYn
+                ))
+                .from(voca)
+                .leftJoin(voca.vocaLearn, vocaLearn)  // vocaLearn을 명시적으로 지정
+                .where(
+                    vocaLearn.userId.eq(userId)
+                            .and(vocaLearn.learnYn.eq("N"))
+                )
+                .offset(offset)
+                .limit(limit)
+                .orderBy(voca.id.asc())
+                .fetch();
+
+        resultMap.put("list", list);
+        resultMap.put("offset", offset);
+        resultMap.put("limit", limit);
+
+        return resultMap;
+    }
 }

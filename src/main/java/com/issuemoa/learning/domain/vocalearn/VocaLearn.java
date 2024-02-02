@@ -6,11 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 
-@Entity(name = "voca_learn")
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class VocaLearn extends BaseTime {
+@Getter
+@Entity(name = "voca_learn")
+public class VocaLearn extends BaseTime implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,11 +1,9 @@
 package com.issuemoa.learning.domain.voca;
 
 import com.issuemoa.learning.domain.BaseTime;
+import com.issuemoa.learning.domain.vocalearn.VocaLearn;
 import lombok.*;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -18,4 +16,8 @@ public class Voca extends BaseTime {
     private String mean;
     private Long registerId;
     private Long modifyId;
+
+    @ManyToOne
+    @JoinColumn(name = "id", referencedColumnName = "vocaId", insertable = false, updatable = false)
+    private VocaLearn vocaLearn;
 }
