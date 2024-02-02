@@ -5,7 +5,7 @@ spring:
   application:
     name: issueMoaLearning
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:http://192.168.0.31:8888
 management:
   endpoints:
     web:
@@ -22,7 +22,7 @@ eureka:
 
 endpoint:
   users:
-    info: http://localhost:37070/users/info
+    info: http://192.168.0.31:17070/users/info
 
 springdoc:
   api-docs:
