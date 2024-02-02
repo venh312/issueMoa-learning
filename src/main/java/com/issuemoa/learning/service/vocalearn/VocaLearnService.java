@@ -43,7 +43,7 @@ public class VocaLearnService {
                         .execute();
         }
 
-        return vocaLearnRepository.save(request.toEntity()).getId();
+        return vocaLearnRepository.save(request.toEntity(userId)).getId();
     }
 
     public Long countByLearn(HttpServletRequest httpServletRequest) throws JsonProcessingException {
