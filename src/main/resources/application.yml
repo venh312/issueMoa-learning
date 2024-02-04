@@ -11,7 +11,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh
+        include: refresh, health, info, metrics, prometheus
 eureka:
   instance:
     preferIpAddress: true # 서비스 이름 대신 서비스 IP 주소 등록
