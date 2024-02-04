@@ -20,6 +20,7 @@ public class OpenApiConfig {
         SecurityScheme securityScheme = new SecurityScheme()
                 .type(SecurityScheme.Type.HTTP)
                 .scheme("bearer")
+                .name("Authorization")
                 .bearerFormat("JWT")
                 .in(SecurityScheme.In.HEADER)
                 .description("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjb25mMzEyQGtha2FvLmNvbSIsIm5hbWUiOiLslYzsiJjsl4bsnYwiLCJpZCI6NCwiYXV0aCI6IklTU1VFTU9BX1VTRVIiLCJleHAiOjE3MDQ5NzkzMjl9.gzXnASGdtoiVQgh57cJqnxREkVGZTFvade8ppCb_yTQKfTMNLashMxD5cZ8FvHPMFTNcC0arvXbQ-vqIxViyvQ");
@@ -31,7 +32,9 @@ public class OpenApiConfig {
                 .in(SecurityScheme.In.HEADER)
                 .description("SamQHPleQjbSKeyRvJWElcHJvamVjdCFA");
 
-        SecurityRequirement securityRequirement = new SecurityRequirement().addList("X-Client-Key");
+        SecurityRequirement securityRequirement = new SecurityRequirement()
+                .addList("Authorization")
+                .addList("X-Client-Key");
 
         // Create securityRequirements object
         return new OpenAPI()
