@@ -12,5 +12,5 @@ COPY build/libs/issueMoa-learning-0.0.1-SNAPSHOT.jar app.jar
 #ENV LOG_DIRECTORY=/issuemoa/logs
 #ENV LOG_FILE=learning
 
-ENTRYPOINT ["java", "-jar" ,"/app.jar", "> /issuemoa/logs/learning.log 2 > &1"]
+ENTRYPOINT ["java", "-jar" ,"/app.jar", "--logging.file=/issuemoa/logs/learning.log"]
 #ENTRYPOINT ["/entrypoint.sh"]
