@@ -3,7 +3,7 @@
 # COPY build/libs/issueMoa-learning-0.0.1-SNAPSHOT.jar app.jar
 # ENTRYPOINT ["java", "-jar", "/app.jar"]
 FROM amazoncorretto:17
-VOLUME /issuemoa
+VOLUME /issuemoa/logs
 
 COPY entrypoint.sh /entrypoint.sh
 COPY build/libs/issueMoa-learning-0.0.1-SNAPSHOT.jar app.jar
