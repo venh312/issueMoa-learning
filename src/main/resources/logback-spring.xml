@@ -24,6 +24,9 @@
         </encoder>
     </appender>
 
+    <!-- hibernate 로그 출력 -->
+    <logger name="org.hibernate.SQL" level="DEBUG" />
+
     <!-- 프로파일 개발 환경 -->
     <springProfile name="dev">
         <root level="${LOG_LEVEL}">
