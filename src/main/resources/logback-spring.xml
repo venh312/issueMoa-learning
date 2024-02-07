@@ -5,9 +5,7 @@
     <property name="LOG_FILE_NAME" value="learning"/>
     <!-- 로그 출력 패턴 -->
     <property name="LOG_PATTERN" value="%cyan(%d{HH:mm:ss.SSS}) %highlight(%-5level) %magenta([%thread]) %green(%logger{20}) - %msg%n"/>
-
-    <!-- 로그 레벨 -->
-    <!--
+    <!-- 로그 레벨
     	1) ERROR : 오류 메시지 표시
         2) WARN  : 경고성 메시지 표시
         3) INFO  : 정보성 메시지 표시
@@ -26,6 +24,7 @@
 
     <!-- hibernate 로그 출력 -->
     <logger name="org.hibernate.SQL" level="DEBUG" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />
 
     <!-- 프로파일 개발 환경 -->
     <springProfile name="dev">
