@@ -1,3 +1,5 @@
+## Voca, Tech 학습 서비스
+
 ## 📌 적용 기술
 <img src="https://img.shields.io/badge/JAVA-2F2625?style=flat-square&logo=coffeescript&logoColor=white"> <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"> <img src="https://img.shields.io/badge/Spring Data JPA & Querydsl-6DB33F?style=flat-square&logo=spring&logoColor=white"> 
 
@@ -17,11 +19,18 @@ issuemoa/voca 954d2adb5a88    1 hours ago    510MB    latest
 ```
 
 ### 3. 도커 컨테이너 실행
-```$ docker run -d --name=issuemoa-learning -p17080:17080 issuemoa/voca```
+```$ docker run -d --name=issuemoa-learning -p 17080:17080 issuemoa/voca```
 - -d 백그라운드로 실행
 - --name 컨테이너명 설정
 - -p 포트 설정
 - 이미지명
+
+### 네트워크
+#### 네트워크 설정이 필요할 경우 생성한다.
+```docker network create issuemoa```
+
+#### 컨테이너 실행 시 옵션을 추가한다.
+```--network issuemoa```
 
 ## Reference
 - https://simpleicons.org/
