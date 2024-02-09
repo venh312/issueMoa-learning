@@ -5,12 +5,10 @@ spring:
   application:
     name: issueMoaLearning
   config:
-    import: optional:configserver:http://192.168.0.31:8888
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh
+    import:
+      - common.yml
+      - optional:configserver:http://192.168.0.31:8888
+
 eureka:
   instance:
     preferIpAddress: true # 서비스 이름 대신 서비스 IP 주소 등록
@@ -23,9 +21,3 @@ eureka:
 endpoint:
   users:
     info: http://192.168.0.31:17070/users/info
-
-springdoc:
-  api-docs:
-    path: /learning/v3/api-docs
-  swagger-ui:
-    path: /learning/swagger-ui.html
