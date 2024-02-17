@@ -5,6 +5,7 @@ import com.issuemoa.learning.domain.interview.QInterview;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,7 @@ public class InterviewService {
     private final UsersRestApi usersRestApi;
     private final QInterview interview = QInterview.interview;
 
+    @Cacheable(value = "interview", key = "#category", cacheManager = "contentCacheManager")
     public HashMap<String, Object> findAll(String category) {
         HashMap<String, Object> resultMap = new HashMap<>();
 
