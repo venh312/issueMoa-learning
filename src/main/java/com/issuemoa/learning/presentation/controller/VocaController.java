@@ -1,9 +1,9 @@
-package com.issuemoa.learning.web;
+package com.issuemoa.learning.presentation.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.issuemoa.learning.message.RestMessage;
-import com.issuemoa.learning.service.voca.VocaResponse;
-import com.issuemoa.learning.service.voca.VocaService;
+import com.issuemoa.learning.presentation.message.RestMessage;
+import com.issuemoa.learning.presentation.dto.VocaResponse;
+import com.issuemoa.learning.application.VocaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,9 +1,10 @@
-package com.issuemoa.learning.service.vocalearn;
+package com.issuemoa.learning.application;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.issuemoa.learning.common.UsersRestApi;
+import com.issuemoa.learning.infrastructure.api.UsersRestApi;
 import com.issuemoa.learning.domain.vocalearn.QVocaLearn;
 import com.issuemoa.learning.domain.vocalearn.VocaLearnRepository;
+import com.issuemoa.learning.presentation.dto.VocaLearnRequest;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

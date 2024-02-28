@@ -1,4 +1,4 @@
-package com.issuemoa.learning.service.grade;
+package com.issuemoa.learning.presentation.dto;
 
 import com.issuemoa.learning.domain.BaseTime;
 import io.swagger.v3.oas.annotations.media.Schema;

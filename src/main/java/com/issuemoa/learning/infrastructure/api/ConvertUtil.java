@@ -1,4 +1,4 @@
-package com.issuemoa.learning.common;
+package com.issuemoa.learning.infrastructure.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
