@@ -1,4 +1,4 @@
-package com.issuemoa.learning.config;
+package com.issuemoa.learning.infrastructure.config;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;

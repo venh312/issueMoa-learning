@@ -1,4 +1,4 @@
-package com.issuemoa.learning.service.vocalearn;
+package com.issuemoa.learning.presentation.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

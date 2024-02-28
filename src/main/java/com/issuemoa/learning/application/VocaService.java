@@ -1,9 +1,11 @@
-package com.issuemoa.learning.service.voca;
+package com.issuemoa.learning.application;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.issuemoa.learning.common.UsersRestApi;
+import com.issuemoa.learning.infrastructure.api.UsersRestApi;
 import com.issuemoa.learning.domain.vocalearn.QVocaLearn;
 import com.issuemoa.learning.domain.voca.QVoca;
+import com.issuemoa.learning.presentation.dto.VocaResponse;
+import com.issuemoa.learning.presentation.dto.VocaRetryResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;

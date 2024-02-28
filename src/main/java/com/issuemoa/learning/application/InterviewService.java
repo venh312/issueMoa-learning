@@ -1,7 +1,8 @@
-package com.issuemoa.learning.service.interview;
+package com.issuemoa.learning.application;
 
-import com.issuemoa.learning.common.UsersRestApi;
+import com.issuemoa.learning.infrastructure.api.UsersRestApi;
 import com.issuemoa.learning.domain.interview.QInterview;
+import com.issuemoa.learning.presentation.dto.interviewResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

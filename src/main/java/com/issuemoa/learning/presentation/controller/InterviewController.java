@@ -1,8 +1,8 @@
-package com.issuemoa.learning.web;
+package com.issuemoa.learning.presentation.controller;
 
-import com.issuemoa.learning.message.RestMessage;
-import com.issuemoa.learning.service.interview.InterviewService;
-import com.issuemoa.learning.service.interview.interviewResponse;
+import com.issuemoa.learning.presentation.message.RestMessage;
+import com.issuemoa.learning.application.InterviewService;
+import com.issuemoa.learning.presentation.dto.interviewResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

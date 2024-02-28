@@ -1,7 +1,8 @@
-package com.issuemoa.learning.service.grade;
+package com.issuemoa.learning.application;
 
 import com.issuemoa.learning.domain.grade.GradeExpRepository;
 import com.issuemoa.learning.domain.grade.QGradeExp;
+import com.issuemoa.learning.presentation.dto.GradeExpResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

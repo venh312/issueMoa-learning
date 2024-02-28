@@ -1,8 +1,8 @@
-package com.issuemoa.learning.web;
+package com.issuemoa.learning.presentation.controller;
 
-import com.issuemoa.learning.message.RestMessage;
-import com.issuemoa.learning.service.grade.GradeExpService;
-import com.issuemoa.learning.service.grade.GradeExpResponse;
+import com.issuemoa.learning.presentation.message.RestMessage;
+import com.issuemoa.learning.application.GradeExpService;
+import com.issuemoa.learning.presentation.dto.GradeExpResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
