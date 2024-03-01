@@ -29,8 +29,6 @@ public class VocaService {
     }
 
     public HashMap<String, Object> findAll(HttpServletRequest httpServletRequest, Integer offset, Integer limit){
-        HashMap<String, Object> resultMap = new HashMap<>();
-
         Long userId = usersRestApi.getUserId(httpServletRequest);
 
         List<VocaResponse> list = jpaQueryFactory
@@ -67,6 +65,7 @@ public class VocaService {
         int totalPage = (int) Math.ceil((float) totalCnt / limit);
         totalPage = totalPage == 0 ? 1 : totalPage;
 
+        HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("list", list);
         resultMap.put("offset", offset);
         resultMap.put("limit", limit);
@@ -77,8 +76,6 @@ public class VocaService {
     }
 
     public HashMap<String, Object> findByVocaRetry(HttpServletRequest httpServletRequest, Integer offset, Integer limit){
-        HashMap<String, Object> resultMap = new HashMap<>();
-
         Long userId = usersRestApi.getUserId(httpServletRequest);
 
         List<VocaRetryResponse> list = jpaQueryFactory
@@ -100,6 +97,7 @@ public class VocaService {
             .orderBy(voca.id.asc())
             .fetch();
 
+        HashMap<String, Object> resultMap = new HashMap<>();
         resultMap.put("list", list);
         resultMap.put("offset", offset);
         resultMap.put("limit", limit);
