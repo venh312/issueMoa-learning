@@ -1,4 +1,4 @@
-package com.issuemoa.learning.domain.vocalearn;
+package com.issuemoa.learning.domain.voca.learn;
 
 import com.issuemoa.learning.domain.BaseTime;
 import lombok.*;

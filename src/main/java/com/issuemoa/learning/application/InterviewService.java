@@ -1,6 +1,5 @@
 package com.issuemoa.learning.application;
 
-import com.issuemoa.learning.infrastructure.api.UsersRestApi;
 import com.issuemoa.learning.domain.interview.QInterview;
 import com.issuemoa.learning.presentation.dto.interviewResponse;
 import com.querydsl.core.types.Projections;
@@ -15,11 +14,10 @@ import java.util.List;
 @Service
 public class InterviewService {
     private final JPAQueryFactory jpaQueryFactory;
-    private final UsersRestApi usersRestApi;
     private final QInterview interview = QInterview.interview;
 
     @Cacheable(value = "interview", key = "#category", cacheManager = "contentCacheManager")
-    public HashMap<String, Object> findAll(String category) {
+    public HashMap<String, Object> findAll(String category){
         HashMap<String, Object> resultMap = new HashMap<>();
 
         List<interviewResponse> list = jpaQueryFactory

@@ -1,6 +1,6 @@
 package com.issuemoa.learning.presentation.dto;
 
-import com.issuemoa.learning.domain.vocalearn.VocaLearn;
+import com.issuemoa.learning.domain.voca.learn.VocaLearn;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(name="Voca Learn Response")

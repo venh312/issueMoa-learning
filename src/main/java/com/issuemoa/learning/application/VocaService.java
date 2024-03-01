@@ -1,6 +1,5 @@
 package com.issuemoa.learning.application;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.issuemoa.learning.infrastructure.api.UsersRestApi;
 import com.issuemoa.learning.domain.vocalearn.QVocaLearn;
 import com.issuemoa.learning.domain.voca.QVoca;
@@ -29,14 +28,10 @@ public class VocaService {
         return vocaLearn.userId.eq(id);
     }
 
-    public HashMap<String, Object> findAll(HttpServletRequest httpServletRequest, Integer offset, Integer limit) throws JsonProcessingException {
+    public HashMap<String, Object> findAll(HttpServletRequest httpServletRequest, Integer offset, Integer limit){
         HashMap<String, Object> resultMap = new HashMap<>();
 
-        Long userId = null;
-
-        // 로그인 상태 라면 본인의 학습 진도를 위해 설정
-        HashMap<String, Object> userInfo = usersRestApi.getUserInfo(httpServletRequest);
-        if (userInfo != null) userId = ((Long) userInfo.get("id"));
+        Long userId = usersRestApi.getUserId(httpServletRequest);
 
         List<VocaResponse> list = jpaQueryFactory
             .select(Projections.constructor(VocaResponse.class,
@@ -81,32 +76,29 @@ public class VocaService {
         return resultMap;
     }
 
-    public HashMap<String, Object> findByVocaRetry(HttpServletRequest httpServletRequest, Integer offset, Integer limit) throws JsonProcessingException {
+    public HashMap<String, Object> findByVocaRetry(HttpServletRequest httpServletRequest, Integer offset, Integer limit){
         HashMap<String, Object> resultMap = new HashMap<>();
 
-        HashMap<String, Object> userInfo = usersRestApi.getUserInfo(httpServletRequest);
-        if (userInfo == null) return null;
-
-        Long userId = ((Long) userInfo.get("id"));
+        Long userId = usersRestApi.getUserId(httpServletRequest);
 
         List<VocaRetryResponse> list = jpaQueryFactory
-                .select(Projections.constructor(VocaRetryResponse.class,
-                        voca.id,
-                        voca.word,
-                        voca.mean,
-                        vocaLearn.userId,
-                        vocaLearn.learnYn
-                ))
-                .from(voca)
-                .leftJoin(voca.vocaLearn, vocaLearn)  // vocaLearn을 명시적으로 지정
-                .where(
-                    vocaLearn.userId.eq(userId)
-                            .and(vocaLearn.learnYn.eq("N"))
-                )
-                .offset(offset)
-                .limit(limit)
-                .orderBy(voca.id.asc())
-                .fetch();
+            .select(Projections.constructor(VocaRetryResponse.class,
+                voca.id,
+                voca.word,
+                voca.mean,
+                vocaLearn.userId,
+                vocaLearn.learnYn
+            ))
+            .from(voca)
+            .leftJoin(voca.vocaLearn, vocaLearn)  // vocaLearn을 명시적으로 지정
+            .where(
+                vocaLearn.userId.eq(userId)
+                .and(vocaLearn.learnYn.eq("N"))
+            )
+            .offset(offset)
+            .limit(limit)
+            .orderBy(voca.id.asc())
+            .fetch();
 
         resultMap.put("list", list);
         resultMap.put("offset", offset);

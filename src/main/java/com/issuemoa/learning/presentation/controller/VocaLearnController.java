@@ -1,7 +1,5 @@
 package com.issuemoa.learning.presentation.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.issuemoa.learning.presentation.message.RestMessage;
 import com.issuemoa.learning.presentation.dto.VocaLearnRequest;
 import com.issuemoa.learning.application.VocaLearnService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,8 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,34 +23,18 @@ public class VocaLearnController {
     private final VocaLearnService vocaLearnService;
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "등록 성공"),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근")})
-    @Operation(summary = "Voca 알고있어요", description = "학습한 단어를 등록한다.")
+        @ApiResponse(responseCode = "200", description = "등록 성공")})
+    @Operation(summary = "Voca 알고 있어요", description = "학습한 단어의 학습 여부를 등록한다.")
     @PostMapping("/voca-learn")
-    public ResponseEntity<RestMessage> save(@RequestBody VocaLearnRequest request, HttpServletRequest httpServletRequest) {
-        try {
-            return ResponseEntity.ok()
-                        .headers(new HttpHeaders())
-                        .body(new RestMessage(HttpStatus.OK, vocaLearnService.save(request, httpServletRequest)));
-        } catch (JsonProcessingException e) {
-            log.error(e.getMessage());
-        }
-        return null;
+    public ResponseEntity<Long> save(@RequestBody VocaLearnRequest request, HttpServletRequest httpServletRequest){
+        return ResponseEntity.ok(vocaLearnService.save(request, httpServletRequest));
     }
 
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "조회 성공"),
-            @ApiResponse(responseCode = "404", description = "존재하지 않는 리소스 접근")})
+        @ApiResponse(responseCode = "200", description = "조회 성공")})
     @Operation(summary = "Voca 학습한 단어 개수", description = "학습한 단어 개수를 가져온다.")
     @GetMapping("/voca-learn/count")
-    public ResponseEntity<RestMessage> countByLearn(HttpServletRequest httpServletRequest) {
-        try {
-            return ResponseEntity.ok()
-                        .headers(new HttpHeaders())
-                        .body(new RestMessage(HttpStatus.OK, vocaLearnService.countByLearn(httpServletRequest)));
-        } catch (JsonProcessingException e) {
-            log.error(e.getMessage());
-        }
-        return null;
+    public ResponseEntity<Long> countByLearn(HttpServletRequest httpServletRequest){
+        return ResponseEntity.ok(vocaLearnService.countByLearn(httpServletRequest));
     }
 }

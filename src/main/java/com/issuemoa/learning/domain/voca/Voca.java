@@ -1,7 +1,7 @@
 package com.issuemoa.learning.domain.voca;
 
 import com.issuemoa.learning.domain.BaseTime;
-import com.issuemoa.learning.domain.vocalearn.VocaLearn;
+import com.issuemoa.learning.domain.voca.learn.VocaLearn;
 import lombok.*;
 import javax.persistence.*;
 

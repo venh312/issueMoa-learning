@@ -1,6 +1,5 @@
 package com.issuemoa.learning.application;
 
-import com.issuemoa.learning.domain.grade.GradeExpRepository;
 import com.issuemoa.learning.domain.grade.QGradeExp;
 import com.issuemoa.learning.presentation.dto.GradeExpResponse;
 import com.querydsl.core.types.Projections;
@@ -12,7 +11,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class GradeExpService {
-    private final GradeExpRepository gradeExpRepository;
     private final JPAQueryFactory jpaQueryFactory;
     private final QGradeExp gradeExp = QGradeExp.gradeExp;
 
