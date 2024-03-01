@@ -1,7 +1,7 @@
 package com.issuemoa.learning.application;
 
 import com.issuemoa.learning.infrastructure.api.UsersRestApi;
-import com.issuemoa.learning.domain.vocalearn.QVocaLearn;
+import com.issuemoa.learning.domain.voca.learn.QVocaLearn;
 import com.issuemoa.learning.domain.voca.learn.VocaLearnRepository;
 import com.issuemoa.learning.presentation.dto.VocaLearnRequest;
 import com.querydsl.jpa.impl.JPAQueryFactory;
