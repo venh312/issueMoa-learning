@@ -11,11 +11,11 @@ public record VocaLearnRequest(
         @Schema(description = "학습 여부 (Y/N)") String learnYn) {
     public VocaLearn toEntity(Long userId) {
         return VocaLearn.builder()
-                    .userId(userId)
-                    .vocaId(this.vocaId)
-                    .learnYn(this.learnYn)
-                    .registerId(userId)
-                    .modifyId(userId)
-                    .build();
+                .userId(userId)
+                .vocaId(this.vocaId)
+                .learnYn(this.learnYn)
+                .registerId(userId)
+                .modifyId(userId)
+                .build();
     }
 }
