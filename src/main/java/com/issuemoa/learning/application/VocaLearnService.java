@@ -22,7 +22,7 @@ public class VocaLearnService {
 
     @Transactional
     public Long save(VocaLearnRequest request, HttpServletRequest httpServletRequest){
-        Long userId = usersRestApi.getUserId(httpServletRequest);
+        long userId = usersRestApi.getUserId(httpServletRequest);
         long result = jpaQueryFactory.select(vocaLearn.count())
                         .from(vocaLearn)
                         .where(vocaLearn.vocaId.eq(request.vocaId())
@@ -43,7 +43,7 @@ public class VocaLearnService {
     }
 
     public Long countByLearn(HttpServletRequest httpServletRequest){
-        Long userId = usersRestApi.getUserId(httpServletRequest);
+        long userId = usersRestApi.getUserId(httpServletRequest);
         return jpaQueryFactory
                 .select(vocaLearn.count())
                 .from(vocaLearn)
