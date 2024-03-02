@@ -36,8 +36,6 @@ public class UsersRestApi {
 
     public Long getUserId(HttpServletRequest httpServletRequest) {
         HashMap<String, Object> userInfo = getUserInfo(httpServletRequest);
-        if (userInfo == null) return null;
         return (Long) userInfo.get("id");
     }
-
 }
