@@ -28,7 +28,7 @@ public class UsersRestApi {
         headers.add("Authorization", bearerToken);
 
         try {
-            return ConvertUtil.toUserInfoMap(new RestTemplate().exchange(endpointUserInfo, HttpMethod.GET, new HttpEntity<>(headers), String.class).getBody());
+            return ConvertUtil.toUserInfo(new RestTemplate().exchange(endpointUserInfo, HttpMethod.GET, new HttpEntity<>(headers), String.class).getBody());
         } catch (Exception e) {
             throw new JsonProcessingException(e.getMessage());
         }
