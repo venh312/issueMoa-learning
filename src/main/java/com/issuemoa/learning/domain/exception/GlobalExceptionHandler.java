@@ -14,6 +14,15 @@ import java.util.Set;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<ErrorMessage> handleJsonProcessingException(JsonProcessingException ex){
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+
+        ErrorMessage errorMessage = new ErrorMessage(errors);
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(UsersNotFoundException.class)
     public ResponseEntity<ErrorMessage> handleUsersNotFoundException(UsersNotFoundException ex){
         List<String> errors = new ArrayList<>();

@@ -24,18 +24,18 @@ public class VocaLearnService {
     public Long save(VocaLearnRequest request, HttpServletRequest httpServletRequest){
         Long userId = usersRestApi.getUserId(httpServletRequest);
         long result = jpaQueryFactory.select(vocaLearn.count())
-                        .from(vocaLearn)
-                        .where(vocaLearn.vocaId.eq(request.vocaId())
-                        .and(vocaLearn.userId.eq(userId)))
-                        .fetchOne();
+                            .from(vocaLearn)
+                            .where(vocaLearn.vocaId.eq(request.vocaId())
+                            .and(vocaLearn.userId.eq(userId)))
+                            .fetchOne();
 
         // 이미 등록 했다면 learnYn 업데이트
         if (result > 0) {
             return jpaQueryFactory.update(vocaLearn)
-                    .set(vocaLearn.learnYn, request.learnYn())
-                    .where(vocaLearn.vocaId.eq(request.vocaId())
-                    .and(vocaLearn.userId.eq(userId)))
-                    .execute();
+                        .set(vocaLearn.learnYn, request.learnYn())
+                        .where(vocaLearn.vocaId.eq(request.vocaId())
+                        .and(vocaLearn.userId.eq(userId)))
+                        .execute();
         }
 
         // 최초 등록
@@ -44,11 +44,12 @@ public class VocaLearnService {
 
     public Long countByLearn(HttpServletRequest httpServletRequest){
         Long userId = usersRestApi.getUserId(httpServletRequest);
+        if (userId == null) return null;
         return jpaQueryFactory
-                .select(vocaLearn.count())
-                .from(vocaLearn)
-                .where(vocaLearn.userId.eq(userId)
-                .and(vocaLearn.learnYn.eq("Y")))
-                .fetchOne();
+                    .select(vocaLearn.count())
+                    .from(vocaLearn)
+                    .where(vocaLearn.userId.eq(userId)
+                    .and(vocaLearn.learnYn.eq("Y")))
+                    .fetchOne();
     }
 }
