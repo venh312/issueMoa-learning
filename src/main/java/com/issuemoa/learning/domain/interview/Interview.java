@@ -21,4 +21,11 @@ public class Interview extends BaseTime {
     private String answer;
     private Long registerId;
     private Long modifyId;
+
+    public void update(String category, String question, String answer, Long modifyId) {
+        this.category = category;
+        this.question = question;
+        this.answer = answer;
+        this.modifyId = modifyId;
+    }
 }
