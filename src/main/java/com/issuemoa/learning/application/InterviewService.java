@@ -16,7 +16,7 @@ public class InterviewService {
     private final JPAQueryFactory jpaQueryFactory;
     private final QInterview interview = QInterview.interview;
 
-    @Cacheable(value = "interview", key = "#category", cacheManager = "contentCacheManager")
+    @Cacheable(value = "interview", key = "#category", cacheManager = "contentCacheManager", unless = "#result == null")
     public HashMap<String, Object> findAll(String category){
         HashMap<String, Object> resultMap = new HashMap<>();
 
