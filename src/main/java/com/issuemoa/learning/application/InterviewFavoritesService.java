@@ -2,6 +2,7 @@ package com.issuemoa.learning.application;
 
 import com.issuemoa.learning.domain.exception.InterviewFavoritesExistsException;
 import com.issuemoa.learning.domain.exception.UsersNotFoundException;
+import com.issuemoa.learning.domain.interview.favorites.InterviewFavorites;
 import com.issuemoa.learning.domain.interview.favorites.InterviewFavoritesRepository;
 import com.issuemoa.learning.infrastructure.api.UsersRestApi;
 import com.issuemoa.learning.presentation.dto.InterviewFavoritesRequest;
@@ -39,7 +40,7 @@ public class InterviewFavoritesService {
         if (userId == null)
             throw new UsersNotFoundException("사용자 정보가 존재하지 않습니다. AccessToken 을 확인해 주세요.");
 
-        Optional interviewFavorites = interviewFavoritesRepository.findById(request.interviewId());
+        Optional<InterviewFavorites> interviewFavorites = interviewFavoritesRepository.findByInterviewIdAndRegisterId(request.interviewId(), userId);
         if (interviewFavorites.isPresent())
             throw new InterviewFavoritesExistsException("이미 등록된 인터뷰 ID 입니다.");
 
