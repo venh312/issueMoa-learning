@@ -5,7 +5,7 @@ spring:
     name: issueMoaLearning
   config:
     import:
-      - optional:configserver:http://61.102.114.235:8888
+      - optional:configserver:http://gate.issuemoa.kr:8888
 
 eureka:
   instance:
@@ -14,8 +14,8 @@ eureka:
     registerWithEureka: true # 유레카 서비스 등록 여부 (default: true)
     fetchRegistry: true # 레지스트리 사본을 로컬에 내려받기 (default: true)
     serviceUrl:
-      defaultZone: http://61.102.114.235:8761/eureka # 유레카 서비스의 위치 설정
+      defaultZone: http://gate.issuemoa.kr:8761/eureka # 유레카 서비스의 위치 설정
 
 endpoint:
   users:
-    info: http://61.102.114.235:17070/users
+    info: http://gate.issuemoa.kr:17070/users
