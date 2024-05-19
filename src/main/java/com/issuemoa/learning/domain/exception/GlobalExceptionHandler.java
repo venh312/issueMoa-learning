@@ -32,6 +32,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(InterviewFavoritesExistsException.class)
+    public ResponseEntity<ErrorMessage> handleInterviewFavoritesExistsException(InterviewFavoritesExistsException ex){
+        List<String> errors = new ArrayList<>();
+        errors.add(ex.getMessage());
+
+        ErrorMessage errorMessage = new ErrorMessage(errors);
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorMessage> handleConstraintViolatedException(ConstraintViolationException ex){
         Set<ConstraintViolation<?>> constraintViolations = ex.getConstraintViolations();
