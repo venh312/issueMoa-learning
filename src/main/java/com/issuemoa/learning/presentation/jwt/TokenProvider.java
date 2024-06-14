@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -26,7 +27,7 @@ public class TokenProvider {
     }
 
     public Long getUserId(String token) {
-        if (token.isEmpty()) return null;
+        if (StringUtils.isBlank(token)) return null;
 
         Claims claims = getClaims(token);
         return ((Number) claims.get("id")).longValue();
