@@ -1,17 +1,17 @@
 package com.issuemoa.learning.application;
 
-import com.issuemoa.learning.infrastructure.api.UsersRestApi;
-import com.issuemoa.learning.domain.voca.learn.QVocaLearn;
 import com.issuemoa.learning.domain.voca.QVoca;
+import com.issuemoa.learning.domain.voca.learn.QVocaLearn;
 import com.issuemoa.learning.presentation.dto.VocaResponse;
 import com.issuemoa.learning.presentation.dto.VocaRetryResponse;
+import com.issuemoa.learning.presentation.jwt.TokenProvider;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class VocaService {
     private final JPAQueryFactory jpaQueryFactory;
-    private final UsersRestApi usersRestApi;
+    private final TokenProvider tokenProvider;
     private final QVoca voca = QVoca.voca;
     private final QVocaLearn vocaLearn = QVocaLearn.vocaLearn;
 
@@ -28,8 +28,8 @@ public class VocaService {
         return vocaLearn.userId.eq(id);
     }
 
-    public HashMap<String, Object> findAll(HttpServletRequest httpServletRequest, Integer offset, Integer limit){
-        Long userId = usersRestApi.getUserId(httpServletRequest);
+    public HashMap<String, Object> findAll(String token, Integer offset, Integer limit){
+        Long userId = tokenProvider.getUserId(token);
 
         List<VocaResponse> list = jpaQueryFactory
             .select(Projections.constructor(VocaResponse.class,
@@ -75,8 +75,8 @@ public class VocaService {
         return resultMap;
     }
 
-    public HashMap<String, Object> findByVocaRetry(HttpServletRequest httpServletRequest, Integer offset, Integer limit){
-        Long userId = usersRestApi.getUserId(httpServletRequest);
+    public HashMap<String, Object> findByVocaRetry(String token, Integer offset, Integer limit){
+        Long userId = tokenProvider.getUserId(token);
 
         List<VocaRetryResponse> list = jpaQueryFactory
             .select(Projections.constructor(VocaRetryResponse.class,

@@ -1,14 +1,14 @@
 package com.issuemoa.learning.application;
 
-import com.issuemoa.learning.infrastructure.api.UsersRestApi;
 import com.issuemoa.learning.domain.voca.learn.QVocaLearn;
 import com.issuemoa.learning.domain.voca.learn.VocaLearnRepository;
 import com.issuemoa.learning.presentation.dto.VocaLearnRequest;
+import com.issuemoa.learning.presentation.jwt.TokenProvider;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import javax.servlet.http.HttpServletRequest;
+
 import javax.transaction.Transactional;
 
 @Service
@@ -17,12 +17,12 @@ import javax.transaction.Transactional;
 public class VocaLearnService {
     private final VocaLearnRepository vocaLearnRepository;
     private final JPAQueryFactory jpaQueryFactory;
-    private final UsersRestApi usersRestApi;
+    private final TokenProvider tokenProvider;
     private final QVocaLearn vocaLearn = QVocaLearn.vocaLearn;
 
     @Transactional
-    public Long save(VocaLearnRequest request, HttpServletRequest httpServletRequest){
-        Long userId = usersRestApi.getUserId(httpServletRequest);
+    public Long save(VocaLearnRequest request, String token){
+        Long userId = tokenProvider.getUserId(token);
         long result = jpaQueryFactory.select(vocaLearn.count())
                             .from(vocaLearn)
                             .where(vocaLearn.vocaId.eq(request.vocaId())
@@ -42,14 +42,14 @@ public class VocaLearnService {
         return vocaLearnRepository.save(request.toEntity(userId)).getId();
     }
 
-    public Long countByLearn(HttpServletRequest httpServletRequest){
-        Long userId = usersRestApi.getUserId(httpServletRequest);
+    public Long countByLearn(String token){
+        Long userId = tokenProvider.getUserId(token);
         if (userId == null) return null;
         return jpaQueryFactory
-                    .select(vocaLearn.count())
-                    .from(vocaLearn)
-                    .where(vocaLearn.userId.eq(userId)
-                    .and(vocaLearn.learnYn.eq("Y")))
-                    .fetchOne();
+                .select(vocaLearn.count())
+                .from(vocaLearn)
+                .where(vocaLearn.userId.eq(userId)
+                .and(vocaLearn.learnYn.eq("Y")))
+                .fetchOne();
     }
 }
