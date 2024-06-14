@@ -28,11 +28,11 @@ public class VocaController {
     @Operation(summary = "Voca 목록", description = "Voca 목록을 불러온다.")
     @GetMapping("/voca")
     public ResponseEntity<HashMap<String, Object>> findAll(
-        HttpServletRequest httpServletRequest,
+        @RequestHeader("Authorization") String token,
         @RequestParam(required = false, defaultValue = "0") Integer offset,
         @RequestParam(required = false, defaultValue = "20") Integer limit){
 
-        return ResponseEntity.ok(vocaService.findAll(httpServletRequest, offset, limit));
+        return ResponseEntity.ok(vocaService.findAll(token, offset, limit));
     }
 
     @ApiResponses(value = {
@@ -41,9 +41,9 @@ public class VocaController {
     @Operation(summary = "단어 다시보기 목록", description = "단어 다시보기 목록을 불러온다.")
     @GetMapping("/voca/retry")
     public ResponseEntity<HashMap<String, Object>> findByVocaRetry(
-            HttpServletRequest httpServletRequest,
+            @RequestHeader("Authorization") String token,
             @RequestParam(required = false, defaultValue = "0") Integer offset,
             @RequestParam(required = false, defaultValue = "20") Integer limit){
-        return ResponseEntity.ok(vocaService.findByVocaRetry(httpServletRequest, offset, limit));
+        return ResponseEntity.ok(vocaService.findByVocaRetry(token, offset, limit));
     }
 }
