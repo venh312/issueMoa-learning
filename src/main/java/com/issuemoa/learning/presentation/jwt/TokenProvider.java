@@ -26,6 +26,8 @@ public class TokenProvider {
     }
 
     public Long getUserId(String token) {
+        if (token.isEmpty()) return null;
+
         Claims claims = getClaims(token);
         return ((Number) claims.get("id")).longValue();
     }
