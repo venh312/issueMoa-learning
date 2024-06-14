@@ -28,7 +28,7 @@ public class VocaController {
     @Operation(summary = "Voca 목록", description = "Voca 목록을 불러온다.")
     @GetMapping("/voca")
     public ResponseEntity<HashMap<String, Object>> findAll(
-        @RequestHeader("Authorization") String token,
+        @RequestHeader(value = "Authorization", required = false) String token,
         @RequestParam(required = false, defaultValue = "0") Integer offset,
         @RequestParam(required = false, defaultValue = "20") Integer limit){
 
