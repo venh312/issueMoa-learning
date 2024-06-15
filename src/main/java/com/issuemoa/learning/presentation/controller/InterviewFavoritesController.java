@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -37,7 +34,7 @@ public class InterviewFavoritesController {
                     content = @Content(schema = @Schema(implementation = InterviewFavoritesRequest.class)))})
     @Operation(summary = "인터뷰 관심 등록", description = "인터뷰 관심 등록하기.")
     @PostMapping("/interview/favorites")
-    public ResponseEntity<Long> findByRegisterId(@RequestHeader("Authorization") String token, InterviewFavoritesRequest request) {
+    public ResponseEntity<Long> findByRegisterId(@RequestHeader("Authorization") String token, @RequestBody InterviewFavoritesRequest request) {
         return ResponseEntity.ok(interviewFavoritesService.save(token, request));
     }
 }
