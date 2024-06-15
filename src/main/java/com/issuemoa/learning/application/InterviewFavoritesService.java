@@ -1,6 +1,5 @@
 package com.issuemoa.learning.application;
 
-import com.issuemoa.learning.domain.exception.InterviewFavoritesExistsException;
 import com.issuemoa.learning.domain.interview.favorites.InterviewFavorites;
 import com.issuemoa.learning.domain.interview.favorites.InterviewFavoritesRepository;
 import com.issuemoa.learning.presentation.dto.InterviewFavoritesRequest;
@@ -34,9 +33,12 @@ public class InterviewFavoritesService {
         Long userId = tokenProvider.getUserId(token);
         Optional<InterviewFavorites> interviewFavorites = interviewFavoritesRepository.findByInterviewIdAndRegisterId(request.interviewId(), userId);
 
-        if (interviewFavorites.isPresent())
-            throw new InterviewFavoritesExistsException("이미 등록된 인터뷰 ID 입니다.");
+        if (interviewFavorites.isPresent()) {
+            interviewFavorites.get().updateUseYn(request.useYn());
+        } else {
+            interviewFavoritesRepository.save(request.toEntity(userId));
+        }
 
-        return interviewFavoritesRepository.save(request.toEntity(userId)).getId();
+        return request.interviewId();
     }
 }

@@ -23,4 +23,8 @@ public class InterviewFavorites extends BaseTime {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "interview_id", referencedColumnName = "id", insertable = false, updatable = false)
     private Interview interview;
+
+    public void updateUseYn(String useYn) {
+        this.useYn = useYn;
+    }
 }

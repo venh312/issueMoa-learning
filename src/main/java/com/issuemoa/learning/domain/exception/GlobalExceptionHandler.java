@@ -3,6 +3,9 @@ package com.issuemoa.learning.domain.exception;
 import com.issuemoa.learning.presentation.dto.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.validation.ConstraintViolation;
@@ -18,6 +21,28 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorMessage> handleJsonProcessingException(JsonProcessingException ex){
         List<String> errors = new ArrayList<>();
         errors.add(ex.getMessage());
+
+        ErrorMessage errorMessage = new ErrorMessage(errors);
+        return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
+        BindingResult bindingResult = ex.getBindingResult();
+
+        StringBuilder sb = new StringBuilder();
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            sb.append("[");
+            sb.append(fieldError.getField());
+            sb.append("](은)는 ");
+            sb.append(fieldError.getDefaultMessage());
+            sb.append(" 입력된 값: [");
+            sb.append(fieldError.getRejectedValue());
+            sb.append("] ");
+        }
+
+        List<String> errors = new ArrayList<>();
+        errors.add(sb.toString());
 
         ErrorMessage errorMessage = new ErrorMessage(errors);
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
