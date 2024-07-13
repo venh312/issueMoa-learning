@@ -10,6 +10,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
 import java.time.Duration;
 
 @Configuration
@@ -20,7 +21,7 @@ public class RedisCacheConfig {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()))
-                .entryTtl(Duration.ofMinutes(30L)); // 캐시 수명 30분
+                .entryTtl(Duration.ofMinutes(30L)); // 캐시 TTL 설정
         return RedisCacheManager.RedisCacheManagerBuilder
                 .fromConnectionFactory(cf)
                 .cacheDefaults(redisCacheConfiguration).build();
