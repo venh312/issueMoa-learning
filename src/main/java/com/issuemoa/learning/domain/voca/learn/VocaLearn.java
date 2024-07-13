@@ -22,4 +22,8 @@ public class VocaLearn extends BaseTime implements Serializable {
     private String learnYn;
     private Long registerId;
     private Long modifyId;
+
+    public void updateLearnYn(String learnYn) {
+        this.learnYn = learnYn;
+    }
 }

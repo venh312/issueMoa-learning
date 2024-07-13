@@ -34,7 +34,7 @@ public class VocaLearnController {
         @ApiResponse(responseCode = "200", description = "조회 성공")})
     @Operation(summary = "Voca 학습한 단어 개수 조회", description = "학습한 단어 개수를 가져온다.")
     @GetMapping("/voca-learn/count")
-    public ResponseEntity<Long> countByLearn(@RequestHeader("Authorization") String token){
-        return ResponseEntity.ok(vocaLearnService.countByLearn(token));
+    public ResponseEntity<Integer> countByUserIdAndLearnYn(@RequestHeader("Authorization") String token){
+        return ResponseEntity.ok(vocaLearnService.countByUserIdAndLearnYn(token));
     }
 }
