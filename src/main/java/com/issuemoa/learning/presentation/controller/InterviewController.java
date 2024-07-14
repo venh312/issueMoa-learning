@@ -1,5 +1,6 @@
 package com.issuemoa.learning.presentation.controller;
 
+import com.issuemoa.learning.application.InterviewFavoritesService;
 import com.issuemoa.learning.application.InterviewService;
 import com.issuemoa.learning.presentation.dto.InterviewRequest;
 import com.issuemoa.learning.presentation.dto.InterviewResponse;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 @RestController
 public class InterviewController {
     private final InterviewService interviewService;
+    private final InterviewFavoritesService interviewFavoritesService;
 
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "조회 성공",
@@ -30,8 +32,13 @@ public class InterviewController {
     @GetMapping("/interview")
     public ResponseEntity<HashMap<String, Object>> findAll(
             @Schema(description = "NETWORK/DATABASE/BACKEND/SECURITY/AGDS/CRYPTO/OS")
-            @RequestParam(value = "category", defaultValue = "BACKEND") String category){
-        return ResponseEntity.ok(interviewService.findAll(category));
+            @RequestParam(value = "category", defaultValue = "BACKEND") String category,
+            @RequestHeader(value = "Authorization", required = false) String token){
+
+        HashMap<String, Object> interviewMap = interviewService.findAll(category);
+        interviewMap.put("favoritesId", interviewFavoritesService.findInterviewFavoritesIdByRegisterId(token));
+
+        return ResponseEntity.ok(interviewMap);
     }
 
     @ApiResponses(value = {

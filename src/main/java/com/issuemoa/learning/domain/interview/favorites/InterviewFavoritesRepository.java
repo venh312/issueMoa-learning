@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface InterviewFavoritesRepository extends JpaRepository<InterviewFavorites, Long> {
-    @Query(value = "select f from interview_favorites f  join fetch f.interview where f.registerId = :registerId and use_yn ='Y'")
-    public List<InterviewFavorites> findUserInterviewFavorites(@Param("registerId") Long registerId);
+    @Query(value = "SELECT f FROM interview_favorites f JOIN FETCH f.interview WHERE f.registerId = :registerId AND use_yn = 'Y'")
+    List<InterviewFavorites> findUserInterviewFavorites(@Param("registerId") Long registerId);
 
-    public Optional<InterviewFavorites> findByInterviewIdAndRegisterId(@Param("interviewId") Long interviewId, @Param("registerId") Long registerId);
+    @Query("SELECT f.interviewId FROM interview_favorites f WHERE f.registerId = :registerId AND use_yn = 'Y'")
+    List<Long> findInterviewFavoritesIdByRegisterId(@Param("registerId") Long registerId);
+
+    Optional<InterviewFavorites> findByInterviewIdAndRegisterId(Long interviewId, Long registerId);
 }

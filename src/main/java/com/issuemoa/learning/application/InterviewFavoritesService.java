@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -26,6 +27,11 @@ public class InterviewFavoritesService {
         resultMap.put("list", interviewFavoritesRepository.findUserInterviewFavorites(userId).stream().map(InterviewFavoritesResponse::toDto));
 
         return resultMap;
+    }
+
+    public List<Long> findInterviewFavoritesIdByRegisterId(String token){
+        Long userId = tokenProvider.getUserId(token);
+        return interviewFavoritesRepository.findInterviewFavoritesIdByRegisterId(userId);
     }
 
     @Transactional
