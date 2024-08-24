@@ -1,5 +1,6 @@
 package com.issuemoa.learning.application;
 
+import com.issuemoa.learning.domain.grade.GradeExp;
 import com.issuemoa.learning.domain.grade.GradeExpRepository;
 import com.issuemoa.learning.presentation.dto.GradeExpResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,4 +20,10 @@ public class GradeExpService {
                 .map(GradeExpResponse::toDto)
                 .toList();
     }
+
+    public GradeExpResponse findTop1ByStandardLessThanEqualOrderByStandardDesc(int standard) {
+        GradeExp info = gradeExpRepository.findTop1ByStandardLessThanEqualOrderByStandardDesc(standard);
+        return new GradeExpResponse(info.getId(), info.getGradeCode(), info.getStandard(), info.getRegisterTime(), info. getModifyTime());
+    }
+
 }
