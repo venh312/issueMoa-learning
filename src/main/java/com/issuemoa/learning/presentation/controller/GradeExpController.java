@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,5 +31,14 @@ public class GradeExpController {
     @GetMapping("/grade-exp")
     public ResponseEntity<List<GradeExpResponse>> findAll(){
         return ResponseEntity.ok(gradeExpService.findAll());
+    }
+
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "조회 성공",
+            content = @Content(schema = @Schema(implementation = GradeExpResponse.class)))})
+    @Operation(summary = "Grade Exp 조회(standard)", description = "standard 에 맞는 등급 경험치 정보를 불러온다.")
+    @GetMapping("/grade-exp/{standard}")
+    public ResponseEntity<GradeExpResponse> findTop1ByStandardLessThanEqualOrderByStandardDesc(@PathVariable("standard") int standard){
+        return ResponseEntity.ok(gradeExpService.findTop1ByStandardLessThanEqualOrderByStandardDesc(standard));
     }
 }
