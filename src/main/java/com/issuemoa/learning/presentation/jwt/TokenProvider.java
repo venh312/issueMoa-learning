@@ -1,13 +1,15 @@
 package com.issuemoa.learning.presentation.jwt;
 
-import com.issuemoa.learning.domain.exception.UsersNotFoundException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.SignatureException;
+import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @RequiredArgsConstructor
 @Component
 public class TokenProvider {
@@ -15,13 +17,18 @@ public class TokenProvider {
 
     public Claims getClaims(String token) {
         try {
+            // JWT 파싱
             return Jwts.parserBuilder().setSigningKey(jwtProperties.getSecretKey())
                     .build()
-                    .parseClaimsJws(token.replace("Bearer ", ""))
+                    .parseClaimsJws(token)
                     .getBody();
-        }  catch (SignatureException e) {
-            throw new UsersNotFoundException("Invalid token");
+        } catch (MalformedJwtException e) {
+            log.error("[getClaims] MalformedJwtException Message : {}", e.getMessage());
+        } catch (JwtException e) {
+            log.error("[getClaims] JwtException Message : {}", e.getMessage());
         }
+
+        return null;
     }
 
     public Long getUserId(String token) {
