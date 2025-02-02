@@ -43,6 +43,7 @@ public class TokenProvider {
 
         if (parseToken.isEmpty()) return 0L;
 
-        return (Long) getClaims(parseToken).get("id");
+        Claims claims = getClaims(token);
+        return ((Number) claims.get("id")).longValue();
     }
 }
