@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -22,14 +21,13 @@ public class TokenProvider {
             // JWT 파싱
             return Jwts.parserBuilder().setSigningKey(jwtProperties.getSecretKey())
                     .build()
-                    .parseClaimsJws(resolveToken(token))
+                    .parseClaimsJws(token)
                     .getBody();
         } catch (MalformedJwtException e) {
             log.error("[getClaims] MalformedJwtException Message : {}", e.getMessage());
         } catch (JwtException e) {
             log.error("[getClaims] JwtException Message : {}", e.getMessage());
         }
-
         return null;
     }
 
@@ -41,7 +39,10 @@ public class TokenProvider {
     }
 
     public Long getUserId(String token) {
-        Claims claims = getClaims(token);
-        return ((Number) claims.get("id")).longValue();
+        String parseToken = resolveToken(token);
+
+        if (parseToken.isEmpty()) return 0L;
+
+        return (Long) getClaims(parseToken).get("id");
     }
 }
