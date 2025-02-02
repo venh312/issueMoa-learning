@@ -39,6 +39,8 @@ public class TokenProvider {
     }
 
     public Long getUserId(String token) {
+        log.info("==> Authorization :: {}", token);
+
         String parseToken = resolveToken(token);
 
         if (parseToken.isEmpty()) return 0L;
