@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -20,7 +22,7 @@ public class TokenProvider {
             // JWT 파싱
             return Jwts.parserBuilder().setSigningKey(jwtProperties.getSecretKey())
                     .build()
-                    .parseClaimsJws(token)
+                    .parseClaimsJws(resolveToken(token))
                     .getBody();
         } catch (MalformedJwtException e) {
             log.error("[getClaims] MalformedJwtException Message : {}", e.getMessage());
@@ -31,8 +33,14 @@ public class TokenProvider {
         return null;
     }
 
+    public String resolveToken(String bearerToken) {
+        return Optional.ofNullable(bearerToken)
+                .filter(token -> token.startsWith("Bearer "))
+                .map(token -> token.substring(7))
+                .orElse("");
+    }
+
     public Long getUserId(String token) {
-        if (StringUtils.isBlank(token)) return null;
         Claims claims = getClaims(token);
         return ((Number) claims.get("id")).longValue();
     }
