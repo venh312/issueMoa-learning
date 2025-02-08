@@ -44,8 +44,7 @@ public class TokenProvider {
     public Long getUserId(HttpServletRequest request) {
         String token = resolveToken(request);
 
-        if (token.isEmpty())
-            throw new UsersNotFoundException("존재하지 않는 사용자입니다.");
+        if (token.isEmpty()) return 0L;
 
         Claims claims = getClaims(token);
         return ((Number) claims.get("id")).longValue();

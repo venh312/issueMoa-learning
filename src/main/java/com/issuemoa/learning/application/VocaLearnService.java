@@ -22,7 +22,6 @@ public class VocaLearnService {
     @Transactional
     public Long save(HttpServletRequest request, VocaLearnRequest vocaLearnRequest){
         Long userId = tokenProvider.getUserId(request);
-        if (userId == null) return 0L;
 
         Optional<VocaLearn> findLearn = vocaLearnRepository.findByUserIdAndVocaId(userId, vocaLearnRequest.vocaId());
 
@@ -38,7 +37,6 @@ public class VocaLearnService {
 
     public int countByUserIdAndLearnYn(HttpServletRequest request){
         Long userId = tokenProvider.getUserId(request);
-        if (userId == null) return 0;
         return vocaLearnRepository.countByUserIdAndLearnYn(userId, "Y");
     }
 }
