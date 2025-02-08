@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -19,24 +20,24 @@ public class VocaLearnService {
     private final TokenProvider tokenProvider;
 
     @Transactional
-    public Long save(VocaLearnRequest request, String token){
-        Long userId = tokenProvider.getUserId(token);
+    public Long save(HttpServletRequest request, VocaLearnRequest vocaLearnRequest){
+        Long userId = tokenProvider.getUserId(request);
         if (userId == null) return 0L;
 
-        Optional<VocaLearn> findLearn = vocaLearnRepository.findByUserIdAndVocaId(userId, request.vocaId());
+        Optional<VocaLearn> findLearn = vocaLearnRepository.findByUserIdAndVocaId(userId, vocaLearnRequest.vocaId());
 
         // 학습 기록이 있다면 learnYn 변경
         if (findLearn.isPresent()) {
             VocaLearn learn = findLearn.get();
-            learn.updateLearnYn(request.learnYn());
+            learn.updateLearnYn(vocaLearnRequest.learnYn());
             return learn.getId();
         }
 
-        return vocaLearnRepository.save(request.toEntity(userId)).getId();
+        return vocaLearnRepository.save(vocaLearnRequest.toEntity(userId)).getId();
     }
 
-    public int countByUserIdAndLearnYn(String token){
-        Long userId = tokenProvider.getUserId(token);
+    public int countByUserIdAndLearnYn(HttpServletRequest request){
+        Long userId = tokenProvider.getUserId(request);
         if (userId == null) return 0;
         return vocaLearnRepository.countByUserIdAndLearnYn(userId, "Y");
     }

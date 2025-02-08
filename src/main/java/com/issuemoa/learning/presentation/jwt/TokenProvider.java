@@ -1,5 +1,6 @@
 package com.issuemoa.learning.presentation.jwt;
 
+import com.issuemoa.learning.domain.exception.UsersNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -7,8 +8,10 @@ import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
-import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.HttpHeaders;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,21 +34,20 @@ public class TokenProvider {
         return null;
     }
 
-    public String resolveToken(String bearerToken) {
-        return Optional.ofNullable(bearerToken)
-                .filter(token -> token.startsWith("Bearer "))
-                .map(token -> token.substring(7))
-                .orElse("");
+    public String resolveToken(HttpServletRequest request) {
+        String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (StringUtils.hasText(authorization) && authorization.startsWith("Bearer"))
+            return authorization.substring(7);
+        return "";
     }
 
-    public Long getUserId(String token) {
-        log.info("==> Authorization :: {}", token);
+    public Long getUserId(HttpServletRequest request) {
+        String token = resolveToken(request);
 
-        String parseToken = resolveToken(token);
+        if (token.isEmpty())
+            throw new UsersNotFoundException("존재하지 않는 사용자입니다.");
 
-        if (parseToken.isEmpty()) return 0L;
-
-        Claims claims = getClaims(parseToken);
+        Claims claims = getClaims(token);
         return ((Number) claims.get("id")).longValue();
     }
 }
